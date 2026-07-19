@@ -24,16 +24,18 @@ export function ChatInput({ onSend, loading, inputRef }: Props) {
 
   return (
     <div className="chat-input-row">
-      <textarea
-        ref={inputRef}
-        className="chat-input"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Ask a question about your PDF... (Enter to send, Shift+Enter for newline)"
-        rows={1}
-        disabled={loading}
-      />
+      <div className="chat-input-wrapper">
+        <textarea
+          ref={inputRef}
+          className="chat-input"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask anything..."
+          rows={1}
+          disabled={loading}
+        />
+      </div>
       <button className="send-btn" onClick={submit} disabled={loading || !value.trim()}>
         {loading
           ? <span className="spinner" />
