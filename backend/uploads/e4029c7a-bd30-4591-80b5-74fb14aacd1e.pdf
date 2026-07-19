@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Md Altaf Hussain - Senior Software Engineer with 5+ years of experience in React, TypeScript, Redux Toolkit, and AWS. Specialized in building enterprise-grade applications." />
+    <meta name="keywords" content="React Developer, TypeScript, Redux Toolkit, AWS, Frontend Engineer, Micro Frontends, Senior Software Engineer" />
+    <meta name="author" content="Md Altaf Hussain" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Md Altaf Hussain - Senior Software Engineer" />
+    <meta property="og:description" content="Senior Software Engineer specializing in React, TypeScript, and AWS. Building scalable enterprise applications." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Md Altaf Hussain - Senior Software Engineer" />
+    <meta name="twitter:description" content="Senior Software Engineer specializing in React, TypeScript, and AWS." />
+    
+    <title>Md Altaf Hussain - Senior Software Engineer | React, TypeScript, AWS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx?t=1771325369164"></script>
+  </body>
+</html>
