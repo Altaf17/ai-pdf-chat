@@ -15,6 +15,12 @@ export async function pollStatus(docId: string): Promise<string> {
   return data.status
 }
 
+export async function fetchHistory(docId: string): Promise<{ role: string; text: string }[]> {
+  const res = await fetch(`${BASE}/chat/history/${docId}`)
+  const data = await res.json()
+  return data.history ?? []
+}
+
 export async function sendMessage(docId: string, question: string): Promise<string> {
   const res = await fetch(`${BASE}/chat/`, {
     method: 'POST',

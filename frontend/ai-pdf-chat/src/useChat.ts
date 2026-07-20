@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from "react";
-import { uploadPDF, pollStatus, sendMessage } from "./api";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { uploadPDF, pollStatus, sendMessage, fetchHistory } from "./api";
 
 export type Message = { id: number; role: "user" | "ai"; text: string };
 export type Toast = { id: number; message: string; type: "error" | "success" };
@@ -7,14 +7,24 @@ export type Toast = { id: number; message: string; type: "error" | "success" };
 let msgId = 0;
 
 export function useChat() {
-  const [docId, setDocId] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [docId, setDocId] = useState<string | null>(() => localStorage.getItem("docId"));
+  const [fileName, setFileName] = useState<string | null>(() => localStorage.getItem("fileName"));
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Restore chat history on mount if docId exists
+  useEffect(() => {
+    if (!docId) return;
+    fetchHistory(docId).then((history) => {
+      if (history.length > 0) {
+        setMessages(history.map((h) => ({ id: ++msgId, role: h.role as "user" | "ai", text: h.text })));
+      }
+    }).catch(() => {});
+  }, []);
 
   const addToast = useCallback(
     (message: string, type: Toast["type"] = "error") => {
@@ -41,11 +51,12 @@ export function useChat() {
           await new Promise((r) => setTimeout(r, 2000));
           status = await pollStatus(id);
         }
-        if (status.startsWith("error"))
-          throw new Error(status.replace("error:", ""));
+        if (status.startsWith("error")) throw new Error(status.replace("error:", ""));
         setDocId(id);
         setFileName(file.name);
         setMessages([]);
+        localStorage.setItem("docId", id);
+        localStorage.setItem("fileName", file.name);
         addToast(`"${file.name}" ready to chat!`, "success");
       } catch (err: any) {
         addToast(err.message);
@@ -79,6 +90,14 @@ export function useChat() {
     [docId, loading],
   );
 
+  const handleNewChat = useCallback(() => {
+    localStorage.removeItem("docId");
+    localStorage.removeItem("fileName");
+    setDocId(null);
+    setFileName(null);
+    setMessages([]);
+  }, []);
+
   return {
     docId,
     fileName,
@@ -90,5 +109,6 @@ export function useChat() {
     inputRef,
     handleUpload,
     handleSend,
+    handleNewChat,
   };
 }

@@ -5,9 +5,10 @@ interface Props {
   uploading: boolean
   uploadProgress: string
   onUpload: (file: File) => void
+  onNewChat: () => void
 }
 
-export function Header({ fileName, uploading, uploadProgress, onUpload }: Props) {
+export function Header({ fileName, uploading, uploadProgress, onUpload, onNewChat }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
@@ -24,6 +25,9 @@ export function Header({ fileName, uploading, uploadProgress, onUpload }: Props)
       </div>
 
       <div className="header-right">
+        {fileName && !uploading && (
+          <button className="new-chat-btn" onClick={onNewChat}>New Chat</button>
+        )}
         {fileName && !uploading && (
           <span className="filename-badge" title={fileName}>
             📄 {fileName.length > 24 ? fileName.slice(0, 24) + '…' : fileName}
