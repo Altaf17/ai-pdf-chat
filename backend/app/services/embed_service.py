@@ -1,6 +1,7 @@
 import json
 import os
 import math
+import time
 from google import genai
 from google.genai import types
 from app.core.config import settings
@@ -31,6 +32,7 @@ def store_chunks(doc_id: str, chunks: list[str]):
     for i, chunk in enumerate(chunks):
         logger.info(f"Embedding chunk {i+1}/{len(chunks)} for {doc_id}")
         embeddings.append(_embed_one(chunk))
+        time.sleep(0.5)  # stay under 5 RPM free tier limit
     with open(os.path.join(_STORE_DIR, f"{doc_id}.json"), "w") as f:
         json.dump({"chunks": chunks, "embeddings": embeddings}, f)
     logger.info(f"Saved vector store for {doc_id}")

@@ -7,5 +7,6 @@ uploads/
 vector_store/
 chroma_db/
 doc_status.json
+chat_history.db
 *.egg-info/
 .pytest_cache/

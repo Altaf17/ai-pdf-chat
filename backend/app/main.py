@@ -4,8 +4,10 @@ from app.core.logger import logger
 from app.api.upload import router as upload_router
 from app.api.health import router as health_router
 from app.api.chat import router as chat_router
+from app.services.history_service import init_db
 
 logger.info("Starting DocMind AI...")
+init_db()
 app = FastAPI(title="DocMind AI", version="1.0.0")
 
 app.add_middleware(

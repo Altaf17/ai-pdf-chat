@@ -8,7 +8,7 @@ import { Toasts } from './components/Toasts'
 import './App.css'
 
 function App() {
-  const { docId, fileName, uploading, uploadProgress, messages, loading, toasts, inputRef, handleUpload, handleSend } = useChat()
+  const { docId, fileName, uploading, uploadProgress, messages, loading, toasts, inputRef, handleUpload, handleSend, handleNewChat } = useChat()
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header fileName={fileName} uploading={uploading} uploadProgress={uploadProgress} onUpload={handleUpload} />
+      <Header fileName={fileName} uploading={uploading} uploadProgress={uploadProgress} onUpload={handleUpload} onNewChat={handleNewChat} />
 
       {!docId ? (
         <UploadZone onUpload={handleUpload} uploading={uploading} uploadProgress={uploadProgress} />
